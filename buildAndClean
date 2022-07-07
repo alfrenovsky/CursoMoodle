@@ -1,0 +1,11 @@
+#!/bin/bash -x
+
+docker-compose build
+docker-compose down
+docker volume rm $(docker volume ls -q) 2> /dev/null
+rm -rf data
+for dir in db moodle moodledata
+do
+	mkdir -p data/$dir
+done
+

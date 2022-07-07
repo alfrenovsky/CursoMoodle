@@ -1,0 +1,58 @@
+version: '3'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - "moodle:/var/www/html:ro"
+      - "$PWD/nginx.conf.template:/etc/nginx/nginx.conf"
+    links:
+      - php
+      - db
+
+  php:
+    # https://docs.docker.com/compose/environment-variables/
+    image: myuser/php4moodle:${VERSION:?err}
+
+    # Con build podemos hacer que compose haga el build
+    # https://docs.docker.com/compose/compose-file/build/
+    build:
+      context: php
+      args:
+        - VERSION=${VERSION:?err}
+    volumes:
+      - "moodle:/var/www/html"
+      - "moodledata:/var/www/moodledata"
+
+    environment:
+      - DEBUG=1
+
+  db:
+    image: mariadb:10.5
+    volumes:
+      - "db:/var/lib/mysql"
+      - "./mariadb.cnf:/etc/mysql/mariadb.conf.d/99-mariadb.cnf"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=moodle_db
+      - MYSQL_USER=moodle_user
+      - MYSQL_PASSWORD=moodle_pass
+
+# https://docs.docker.com/compose/compose-file/compose-file-v3/#volumes
+volumes:
+  moodle:
+    driver_opts:
+      type: none
+      device: $PWD/data/moodle
+      o: bind
+  moodledata:
+    driver_opts:
+      type: bind
+      device: $PWD/data/moodledata
+      o: bind
+  db:
+    driver_opts:
+      type: none
+      device: $PWD/data/db
+      o: bind
