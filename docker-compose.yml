@@ -33,6 +33,7 @@ services:
     volumes:
       - "db:/var/lib/mysql"
       - "./mariadb.cnf:/etc/mysql/mariadb.conf.d/99-mariadb.cnf"
+      - "./dblogs:/var/log/mysql"
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=moodle_db

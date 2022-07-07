@@ -38,6 +38,13 @@ RUN \
     apt-get clean && \
     find /var/lib/apt/lists -type f -delete
 
+ADD moosh.tar /
+RUN echo "#!/bin/bash" > /usr/bin/moosh && \
+    echo '/moosh/moosh.php -p /var/www/html/moodle -n \$@' >> /usr/bin/moosh && \
+    chmod a+x /usr/bin/moosh
+
+
+
 WORKDIR /var/www/html
 
 COPY init.sh /moodle/
