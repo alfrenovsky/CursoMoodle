@@ -39,6 +39,16 @@ services:
       - MYSQL_USER=moodle_user
       - MYSQL_PASSWORD=moodle_pass
 
+  pma:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - 81:80
+    environment:
+      - HIDE_PHP_VERSION=true
+      - PMA_HOST=db
+
+
 # https://docs.docker.com/compose/compose-file/compose-file-v3/#volumes
 volumes:
   moodle:
