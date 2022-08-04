@@ -25,20 +25,20 @@ services:
       - "moodle:/var/www/html"
       - "moodledata:/var/www/moodledata"
 
-    environment:
-      - DEBUG=1
+    env_file:
+      - php-fpm.env
+      - mysql.env
 
   db:
     image: mariadb:10.5
     volumes:
       - "db:/var/lib/mysql"
       - "./mariadb.cnf:/etc/mysql/mariadb.conf.d/99-mariadb.cnf"
-      - "./dblogs:/var/log/mysql"
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_DATABASE=moodle_db
-      - MYSQL_USER=moodle_user
-      - MYSQL_PASSWORD=moodle_pass
+      # Esta linea habilitaria la persistencia de los
+      # logs de mysql al filesystem local.
+      # - "./data/dblogs:/var/log/mysql"
+    env_file:
+      - mysql.env
 
   pma:
     image: phpmyadmin/phpmyadmin:latest

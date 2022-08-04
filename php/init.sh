@@ -48,16 +48,32 @@ installmoodle()
 	fi
   }
 
-  makephpini()
+  copyphpini()
   {
     [ $DEBUG ] && ini="development" || ini="production"
+    figlet "Copying ${ini} php ini"
     cp "$PHP_INI_DIR/php.ini-$ini" "$PHP_INI_DIR/php.ini"
   }
 
-  makephpini
+  # https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html
+  makephpfpmini()
+  {
+
+    figlet "Making php-fpm customizations"
+    output="/usr/local/etc/php-fpm.d/yy-custom.conf"
+    echo "[www]" | tee ${output}
+    for var in ${!PHP_FPM_@}
+      do
+        echo "${!var}" | tee -a ${output}
+      done
+  }
+
+  copyphpini
+  makephpfpmini
 
   installmoodle
 
   wait4mysql
 
+  figlet "Starting php-fpm"
   php-fpm

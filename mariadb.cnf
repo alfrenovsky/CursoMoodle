@@ -1,3 +1,7 @@
 [mariadb]
 
+performance_schema=ON
+
+innodb_log_file_size=32M
+
 

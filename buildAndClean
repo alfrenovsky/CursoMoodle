@@ -1,6 +1,12 @@
 #!/bin/bash -x
 
+mkdir -p php/cache/apt
+
+# Ver Buildkit
+#export BUILDKIT_PROGRESS=plain
+export DOCKER_BUILDKIT=1
 docker-compose build
+
 docker-compose down
 docker volume rm $(docker volume ls -q) 2> /dev/null
 rm -rf data

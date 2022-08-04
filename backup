@@ -1,0 +1,14 @@
+#!/bin/bash -x
+
+orig="root@$ip:$path"
+dest="$PWD/backups"
+
+[ -d "$dest" ] || mkdir -p "$dest"
+
+# rsync -vaP "${orig}" "${dest}/last"
+
+d="$(date +%Y-%m-%d+%H:%M:%S)"
+
+mkdir ${dest}/$d
+rsync -a ${dest}/last/. ${dest}/$d  --link-dest=${dest}/last
+
