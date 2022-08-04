@@ -58,7 +58,6 @@ installmoodle()
   # https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html
   makephpfpmini()
   {
-
     figlet "Making php-fpm customizations"
     output="/usr/local/etc/php-fpm.d/yy-custom.conf"
     echo "[www]" | tee ${output}
@@ -68,8 +67,20 @@ installmoodle()
       done
   }
 
+
+  makephpcustomini()
+  {
+    figlet "Making php customizations"
+    output="$PHP_INI_DIR/conf.d/99-moodle.ini"
+    for var in ${!PHP_CFG_@}
+    do
+      echo "${!var}" | tee -a ${output}
+    done
+  }
+
   copyphpini
   makephpfpmini
+  makephpcustomini
 
   installmoodle
 

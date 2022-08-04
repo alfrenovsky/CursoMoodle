@@ -7,7 +7,7 @@ dest="$PWD/backups"
 
 # rsync -vaP "${orig}" "${dest}/last"
 
-d="$(date +%Y-%m-%d+%H:%M:%S)"
+d="$(date +%Y-%m-%d-%H-%M-%S)"
 
 mkdir ${dest}/$d
 rsync -a ${dest}/last/. ${dest}/$d  --link-dest=${dest}/last
