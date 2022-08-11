@@ -39,6 +39,7 @@ services:
       # - "./data/dblogs:/var/log/mysql"
     env_file:
       - mysql.env
+    stop_grace_period: 10m
 
   pma:
     image: phpmyadmin/phpmyadmin:latest

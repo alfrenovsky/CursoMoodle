@@ -46,7 +46,7 @@ RUN --mount=type=cache,id=aptcache,target=/var/cache/apt,rw \
 
 ADD moosh.tar /
 RUN echo "#!/bin/bash" > /usr/bin/moosh && \
-    echo '/moosh/moosh.php -p /var/www/html/moodle -n \$@' >> /usr/bin/moosh && \
+    echo '/moosh/moosh.php -p /var/www/html/moodle -n $@' >> /usr/bin/moosh && \
     chmod a+x /usr/bin/moosh
 
 WORKDIR /var/www/html
@@ -57,3 +57,9 @@ RUN chmod a+x /moodle/init.sh
 ADD https://download.moodle.org/stable311/moodle-${VERSION}.tgz /moodle/moodle.tgz
 
 CMD "/moodle/init.sh"
+
+
+
+
+
+
