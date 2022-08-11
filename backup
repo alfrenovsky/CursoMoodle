@@ -5,7 +5,17 @@ dest="$PWD/backups"
 
 [ -d "$dest" ] || mkdir -p "$dest"
 
-# rsync -vaP "${orig}" "${dest}/last"
+# rsync -vaP    "${orig}" "${dest}/last"
+# no usar --inplace
+for times in 1 2 3
+do
+  rsync -a --numeric-ids  "${orig}" "${dest}/last" --exclude_from=nobackup
+done
+
+# ssh al server bajar docker compose
+# rsync de nuevo
+# ssh al server levantar docker compose
+
 
 d="$(date +%Y-%m-%d-%H-%M-%S)"
 
