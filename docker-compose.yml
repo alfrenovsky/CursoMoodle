@@ -29,6 +29,19 @@ services:
       - php-fpm.env
       - mysql.env
 
+  cron:
+    image: myuser/php4moodle:${VERSION:?err}
+    depends_on:
+      - php
+    env_file:
+      - php-fpm.env
+      - mysql.env
+    volumes:
+      - "moodle:/var/www/html"
+      - "moodledata:/var/www/moodledata"
+    command: "/moodle/cron.sh"
+
+
   db:
     image: mariadb:10.5
     volumes:

@@ -53,6 +53,8 @@ WORKDIR /var/www/html
 
 COPY init.sh /moodle/
 RUN chmod a+x /moodle/init.sh
+COPY cron.sh /moodle/
+RUN chmod a+x /moodle/cron.sh
 
 ADD https://download.moodle.org/stable311/moodle-${VERSION}.tgz /moodle/moodle.tgz
 
