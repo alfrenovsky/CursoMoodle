@@ -1,0 +1,10 @@
+moodledata/cache
+moodledata/localcache
+moodledata/temp
+moodledata/trashdir
+moodledata/sessions
+moodledata/muc
+moodledata/lock
+moodledata/lang
+db/ib_logfile0
+db/ib_logfile1

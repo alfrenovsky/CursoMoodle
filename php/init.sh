@@ -50,6 +50,7 @@ installmoodle()
 
 upgradeifneeded()
 {
+  # TAREA PARA LA CASA
   if [ -f /var/www/html/moodle/update ]
   then
     rm /var/www/html/moodle/update
@@ -60,8 +61,8 @@ upgradeifneeded()
 upgrade()
 {
   figlet "Upgrade"
-  wait4mysql
 
+  wait4mysql
   sudo -u www-data php moodle/admin/cli/maintenance.php --enable
 
   cd /var/www/html
@@ -90,7 +91,7 @@ upgrade()
     fi
   done
 
-  rm -rf .old
+  rm -rf .old &
 
   figlet "Running upgrade"
   sudo -u www-data php moodle/admin/cli/upgrade.php --non-interactive
@@ -100,13 +101,13 @@ upgrade()
 
 list_plugins()
 {
-  moosh  info-plugins | while read type path list
-do
-  for name in ${list//,/ }
+  moosh info-plugins | while read type dir list
   do
-    echo $path/$name
+    for name in ${list//,/ }
+    do
+      $dir/$name
+    done
   done
-done
 }
 
 copyphpini()
@@ -141,6 +142,7 @@ makephpcustomini()
 
 copyphpini
 makephpfpmini
+
 makephpcustomini
 
 installmoodle # if needed
